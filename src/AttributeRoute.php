@@ -13,15 +13,23 @@ class AttributeRoute
      */
     protected static array $routeInstances = [];
 
-    public static function handler()
+    public static function runHandler()
     {
-        static::reflectionControllerClasses();
+        /**
+         * @var \Config\AttributeRoute
+         */
+        $config = config("AttributeRoute");
+        foreach ($config->controllerNamespaces as $namespace) {
+            static::reflectionControllerClasses($namespace);
+        }
+        if (ENVIRONMENT === 'production' && $config->productionCache) {
+        }
         static::registerRoutes();
     }
 
-    protected static function reflectionControllerClasses()
+    protected static function reflectionControllerClasses(string $namespace)
     {
-        $classes = ClassFinder::getClassesInNamespace('App\Controllers');
+        $classes = ClassFinder::getClassesInNamespace($namespace);
         foreach ($classes as $class) {
             $controller = new \ReflectionClass($class);
             $methods = $controller->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -44,4 +52,5 @@ class AttributeRoute
             $route->register();
         }
     }
+
 }

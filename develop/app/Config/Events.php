@@ -51,5 +51,5 @@ Events::on('pre_system', static function () {
 });
 
 Events::on('pre_system', function(){
-    AttributeRoute::handler();
+    AttributeRoute::runHandler();
 });
