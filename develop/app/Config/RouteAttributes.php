@@ -4,11 +4,11 @@ namespace Config;
 
 use CodeIgniter\Config\BaseConfig;
 
-class AttributeRoute extends BaseConfig
+class RouteAttributes extends BaseConfig
 {
 
     /**
-     * auto scan attribute namespaces
+     * autoscan namespaces
      *
      * @var array<string>
      */

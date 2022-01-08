@@ -43,7 +43,7 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE => APPPATH, // For custom app namespace
         'Config'      => APPPATH . 'Config',
-        'monken\\Ci4AttributeRoute' => ROOTPATH."..".DIRECTORY_SEPARATOR."src".DIRECTORY_SEPARATOR
+        'monken\\Ci4RouteAttributes' => ROOTPATH."..".DIRECTORY_SEPARATOR."src".DIRECTORY_SEPARATOR
     ];
 
     /**

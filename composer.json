@@ -1,5 +1,5 @@
 {
-    "name": "monken/ci4-attribute-route",
+    "name": "monken/ci4-route-attributes",
     "description": "Make CodeIgniter4 Router supports automatic binding of Controller Method with PHP8 Attribute syntax.",
     "keywords": [
 		"codeigniter4",
@@ -21,7 +21,7 @@
     },
     "autoload": {
 		"psr-4": {
-			"monken\\Ci4AttributeRoute": "src/"
+			"monken\\Ci4RouteAttributes": "src/"
 		}
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use monken\Ci4AttributeRoute\Route;
+use monken\Ci4RouteAttributes\Route;
 
 class Home extends BaseController
 {

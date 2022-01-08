@@ -1,8 +1,9 @@
 <?php
 
-namespace monken\Ci4AttributeRoute;
+namespace monken\Ci4RouteAttributes;
 
 use Config\Services;
+use CodeIgniter\Router\RouteCollection;
 
 #[\Attribute(\Attribute::TARGET_METHOD | \Attribute::IS_REPEATABLE)]
 class Route
@@ -29,9 +30,11 @@ class Route
         return $this;
     }
 
-    public function register()
+    public function register(?RouteCollection $routes = null)
     {
-        $routes = Services::routes();
+        if(is_null($routes)){
+            $routes = Services::routes();
+        }
         foreach ($this->methods as $method) {
             $routes->{$method}(
                 $this->path,

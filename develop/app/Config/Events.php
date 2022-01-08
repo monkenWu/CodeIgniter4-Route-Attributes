@@ -4,7 +4,7 @@ namespace Config;
 
 use CodeIgniter\Events\Events;
 use CodeIgniter\Exceptions\FrameworkException;
-use monken\Ci4AttributeRoute\AttributeRoute;
+use monken\Ci4RouteAttributes\RouteAttributes;
 
 /*
  * --------------------------------------------------------------------
@@ -51,5 +51,5 @@ Events::on('pre_system', static function () {
 });
 
 Events::on('pre_system', function(){
-    AttributeRoute::runHandler();
+    RouteAttributes::runHandler();
 });
