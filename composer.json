@@ -1,0 +1,27 @@
+{
+    "name": "monken/ci4-route-attributes",
+    "description": "Make CodeIgniter4 Router supports automatic binding of Controller Method with PHP8 Attribute syntax.",
+    "keywords": [
+		"codeigniter4",
+		"php8 attribute",
+		"router"
+	],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "monkenWu",
+            "email": "610877102@mail.nknu.edu.tw"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php" : "^8",
+        "haydenpierce/class-finder": "^0.4.3"
+    },
+    "autoload": {
+		"psr-4": {
+			"monken\\Ci4RouteAttributes": "src/"
+		}
+	}
+}
