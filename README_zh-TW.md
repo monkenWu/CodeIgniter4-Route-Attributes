@@ -124,7 +124,7 @@ class Ci4Controller extends BaseController
 
 #### ignoreGroup
 
-若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但某個路由你希望獨立開來，不沿用 `RouteGroup` 。這時你就可以將這個參數設定為 `false` ，它會讓路由以完全獨立的方式進行設定：
+若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但某個路由你希望獨立開來，不沿用 `RouteGroup` 。這時你就可以將這個參數設定為 `true` ，它會讓路由以完全獨立的方式進行設定：
 
 ```php=
 #[Route(path: 'attr/route', methods: ["get"], ignoreGroup: true)]
@@ -299,10 +299,10 @@ $routes->presenter('user', [
 
 #### ignoreGroup
 
-若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但你希望獨立地設定 `RouteRESTful` ，不沿用 `RouteGroup` 的相關設定。這時你就可以將這個參數設定為 `false` ：
+若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但你希望獨立地設定 `RouteRESTful` ，不沿用 `RouteGroup` 的相關設定。這時你就可以將這個參數設定為 `true` ：
 
 ```php
-#[RouteRESTful(name: 'api/user', ignoreGroup: false)]
+#[RouteRESTful(name: 'api/user', ignoreGroup: true)]
 ```
 
 ### RouteGroup
