@@ -56,7 +56,7 @@ class RouteRESTful implements RouteInterface
 
         $this->options["controller"] = $this->className;
         if ($this->websafe === true && $this->type === 'resource') {
-            $this->options['websafe'] = true;
+            $this->options['websafe'] = 1;
         }
         if (is_array($this->only))  $this->options['only'] = $this->only;
         if (is_array($this->except))  $this->options['except'] = $this->except;
