@@ -1,0 +1,4 @@
+
+Events::on('pre_system', function(){
+    \monken\Ci4RouteAttributes\RouteAttributes::runHandler();
+});
