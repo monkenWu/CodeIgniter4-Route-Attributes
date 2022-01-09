@@ -11,7 +11,7 @@ class RouteGroup
     /**
      * route instance array
      *
-     * @var array<Route>
+     * @var array<RouteInterface>
      */
     protected array $routes = [];
 
@@ -22,7 +22,7 @@ class RouteGroup
     }
 
     public function bindRoute(
-        Route $route
+        RouteInterface $route
     ): RouteGroup {
         $this->routes[] = $route;
         return $this;

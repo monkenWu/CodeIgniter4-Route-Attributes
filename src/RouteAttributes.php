@@ -31,12 +31,22 @@ class RouteAttributes
                 $group = $groupAttributes[0]->newInstance();
             }
 
+            $RESTfulpAttributes = $controller->getAttributes(RouteRESTful::class);
+            if (count($RESTfulpAttributes) === 1) {
+                $RESTfulRoute = $RESTfulpAttributes[0]->newInstance()->bind($class);
+                if ($group) {
+                    $group->bindRoute($RESTfulRoute);
+                } else {
+                    $RESTfulRoute->register();
+                }
+            }
+
             $methods = $controller->getMethods(\ReflectionMethod::IS_PUBLIC);
             foreach ($methods as $method) {
                 $attributes = $method->getAttributes(Route::class);
                 foreach ($attributes as $attribute) {
 
-                    $route = $attribute->newInstance()->bindMethod(
+                    $route = $attribute->newInstance()->bind(
                         $class,
                         $method->name,
                         count($method->getParameters())
@@ -53,4 +63,5 @@ class RouteAttributes
             if ($group) $group->registerRoutes();
         }
     }
+
 }

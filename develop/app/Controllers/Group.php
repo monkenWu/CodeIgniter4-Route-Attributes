@@ -5,8 +5,8 @@ namespace App\Controllers;
 use monken\Ci4RouteAttributes\Route;
 use monken\Ci4RouteAttributes\RouteGroup;
 
-#[RouteGroup('api/v1/test')]
-class Test extends BaseController
+#[RouteGroup('/route/testgroup')]
+class Group extends BaseController
 {
 
     #[Route(path:'getindex', methods:['get'])]
@@ -15,10 +15,10 @@ class Test extends BaseController
         return "hi";
     }
 
-    #[Route(path:'getyes', methods:['get', 'post'])]
-    public function msdfoipjkeior()
+    #[Route(path:'get/something', methods:['get', 'post'])]
+    public function somefunction()
     {
-        return "yesyyes";
+        return "something";
     }
 
 }
