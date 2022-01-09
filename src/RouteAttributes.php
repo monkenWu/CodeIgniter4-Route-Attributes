@@ -42,7 +42,7 @@ class RouteAttributes
             $RESTfulpAttributes = $controller->getAttributes(RouteRESTful::class);
             if (count($RESTfulpAttributes) === 1) {
                 $RESTfulRoute = $RESTfulpAttributes[0]->newInstance()->bind($class);
-                if ($group) {
+                if ($group && $RESTfulRoute->ignoreGroup === false) {
                     $group->bindRoute($RESTfulRoute);
                 } else {
                     $RESTfulRoute->register();
@@ -60,7 +60,7 @@ class RouteAttributes
                         count($method->getParameters())
                     );
 
-                    if ($group) {
+                    if ($group && $route->ignoreGroup === false) {
                         $group->bindRoute($route);
                     } else {
                         $route->register();

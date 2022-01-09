@@ -19,7 +19,8 @@ class Route implements RouteInterface
     public function __construct(
         protected string $path = '',
         protected array $methods = [],
-        protected ?array $options = null
+        protected ?array $options = null,
+        public bool $ignoreGroup = false
     ) {
         foreach ($methods as $method) {
             if(!in_array($method, $this->allowMethod)){

@@ -23,6 +23,8 @@ class RouteRESTful implements RouteInterface
      * @param array|null $only
      * @param array|null $except
      * @param string|null $placeholder
+     * @param array $options
+     * @param boolean $ignoreGroup
      */
     public function __construct(
         protected string $name,
@@ -31,7 +33,8 @@ class RouteRESTful implements RouteInterface
         protected ?array $only = null,
         protected ?array $except = null,
         protected ?string $placeholder = null,
-        protected array $options = []
+        protected array $options = [],
+        public bool $ignoreGroup = false
     ) {
         if (!in_array($type, $this->allowType)) {
             throw RouteRESTfulException::forAllowType($type, $name);

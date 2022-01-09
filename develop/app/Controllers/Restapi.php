@@ -8,7 +8,7 @@ use monken\Ci4RouteAttributes\RouteGroup;
 use monken\Ci4RouteAttributes\RouteRESTful;
 
 #[RouteGroup('/api/v1')]
-#[RouteRESTful('user', 'resource')]
+#[RouteRESTful(name: 'user', type: 'resource')]
 class Restapi extends ResourceController
 {
     /**
@@ -24,6 +24,7 @@ class Restapi extends ResourceController
     }
 
     #[Route('user/special', ['get', 'cli'])]
+    #[Route(path: 'ignore/user/special', methods: ['get'], ignoreGroup: true)]
     public function special()
     {
         return $this->respond([
