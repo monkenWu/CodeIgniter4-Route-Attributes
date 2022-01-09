@@ -30,7 +30,8 @@ class RouteRESTful implements RouteInterface
         protected ?bool $websafe = null,
         protected ?array $only = null,
         protected ?array $except = null,
-        protected ?string $placeholder = null
+        protected ?string $placeholder = null,
+        protected array $options = []
     ) {
         if (!in_array($type, $this->allowType)) {
             throw RouteRESTfulException::forAllowType($type, $name);
@@ -49,15 +50,18 @@ class RouteRESTful implements RouteInterface
         if (is_null($routes)) {
             $routes = Services::routes();
         }
-        $options = ["controller" => $this->className];
-        if ($this->websafe === true && $this->type === 'resource') $options['websafe'] = true;
-        if (is_array($this->only))  $options['only'] = $this->only;
-        if (is_array($this->except))  $options['except'] = $this->except;
-        if (is_string($this->placeholder))  $options['placeholder'] = $this->placeholder;
+
+        $this->options["controller"] = $this->className;
+        if ($this->websafe === true && $this->type === 'resource') {
+            $this->options['websafe'] = true;
+        }
+        if (is_array($this->only))  $this->options['only'] = $this->only;
+        if (is_array($this->except))  $this->options['except'] = $this->except;
+        if (is_string($this->placeholder))  $this->options['placeholder'] = $this->placeholder;
 
         $routes->{$this->type}(
             $this->name,
-            $options
+            $this->options
         );
 
         return $this;

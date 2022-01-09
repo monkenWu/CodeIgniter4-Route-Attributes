@@ -13,11 +13,19 @@ class RouteAttributes
          * @var \Config\RouteAttributes
          */
         $config = config("RouteAttributes");
-        foreach ($config->controllerNamespaces as $namespace) {
-            static::reflectionControllerClasses($namespace);
+        if($config->enabled){
+            foreach ($config->controllerNamespaces as $namespace) {
+                static::reflectionControllerClasses($namespace);
+            }
         }
     }
 
+    /**
+     * Automatically scan the route-attributes under the namespace.
+     *
+     * @param string $namespace
+     * @return void
+     */
     protected static function reflectionControllerClasses(string $namespace)
     {
         $classes = ClassFinder::getClassesInNamespace($namespace);
