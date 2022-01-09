@@ -130,6 +130,36 @@ class Ci4Controller extends BaseController
 #[Route(path: 'attr/route', methods: ["get"], ignoreGroup: true)]
 ```
 
+#### 置換符號
+
+你只需要關注 `path` 中的置換符號設定，程式庫會自動地判斷控制器方法的參數數量，並正確設定路由。
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+
+class Ci4Controller extends BaseController
+{
+    #[Route(path: 'test/(:segment)/(:segment)/(:segment)', methods: ["get"])]
+    public function hello($a, $b, $c)
+    {
+        echo $a . '<br>';
+        echo $b . '<br>';
+        echo $c . '<br>';
+    }
+
+}
+```
+
+這等同於：
+
+```php
+$route->get('test/(:segment)/(:segment)/(:segment)', 'App\Controllers\Ci4Controller::hello/$1/$2/$3');
+```
+
 #### 單一 Method 宣告多個路由
 
 若是你需要，你也可以針對單一 Method 繫結多個路由設定。
