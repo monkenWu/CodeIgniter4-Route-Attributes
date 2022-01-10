@@ -114,7 +114,7 @@ The upper command will make to changes on our project.
 
 ## Instructions
 
-In short, this library is a [CodeIgniter4 Router](https://codeigniter.tw/user_guide/incoming/routing.html) presentative way under the PHP8 Attributes feature, it merely provides litte mapping and encapsulation for some CodeIgniter4 Router methods. Other than that, there's no other extra functionalities.
+In short, this library is a [CodeIgniter4 Router](https://codeigniter.com/user_guide/incoming/routing.html) presentative way under the PHP8 Attributes feature, it merely provides litte mapping and encapsulation for some CodeIgniter4 Router methods. Other than that, there's no other extra functionalities.
 
 By means of scanning the comments automatically inside the Controller, routes and methods will be connected, enables you to write routing rules straightforwardly, and maintain the relationship between Controllers and Routes in a convenient way.
 
@@ -139,7 +139,7 @@ class Ci4Controller extends BaseController
 
 In this example, `Path` represents the acutal path to call this Controller method, and `method` will expect you to pass a String array, including the HTTP verbs to access to this Controller method.
 
-According to the [Router Global Options](https://codeigniter.tw/user_guide/incoming/routing.html#id15) of the CodeIgniter4, you can use the following verbs: `add`, `get`, `post`, `put`, `head`, `options`, `delete`, `path`, and `cli`.
+According to the [Router Global Options](https://codeigniter.com/user_guide/incoming/routing.html#global-options) of the CodeIgniter4, you can use the following verbs: `add`, `get`, `post`, `put`, `head`, `options`, `delete`, `path`, and `cli`.
 You can declare several verbs to achieve the effect of switching between different `method` under the same `path` with access to the identical Controller effects.
 
 #### options
@@ -216,7 +216,7 @@ Through the upper settings, no matter accessing to `attr/route` or `hello/msg`, 
 
 ### RouteRESTful
 
-CodeIgniter4 offers convenient [RESTful patterns](https://codeigniter.tw/user_guide/incoming/restful.html) for you to inherit related class to quickly achieve RESTful design pattern. 
+CodeIgniter4 offers convenient [RESTful patterns](https://codeigniter.com/user_guide/incoming/restful.html) for you to inherit related class to quickly achieve RESTful design pattern. 
 This library also provides related patterns for you to transform your controller into RESTful routes rapidly.
 
 #### Resource Route
@@ -275,7 +275,7 @@ $routes->presenter('user', [
 ]);
 ```
 
-You can adjust RouteRESTful `type` base on your need, through setting up your [ResourceRoute](https://codeigniter.tw/user_guide/incoming/restful.html#id2) or [PresenterRoute](https://codeigniter.tw/user_guide/incoming/restful.html#id7).
+You can adjust RouteRESTful `type` base on your need, through setting up your [ResourceRoute](https://codeigniter.com/user_guide/incoming/restful.html#resource-routes) or [PresenterRoute](https://codeigniter.com/user_guide/incoming/restful.html#presenter-routes).
 
 #### websafe
 
@@ -295,7 +295,7 @@ You can use `only` option to restrict only generate the route you've mentioned. 
 ])]
 ```
 
-For acceptable method names, please refer to our [documentation](https://codeigniter.tw/user_guide/incoming/restful.html#id5).
+For acceptable method names, please refer to our [documentation](https://codeigniter.com/user_guide/incoming/restful.html#limit-the-routes-made).
 
 #### except
 
@@ -307,7 +307,7 @@ You can use `except` to remove production of some routes, this parameter only ac
 ])]
 ```
 
-For acceptable method names, please refer to our [documentation](https://codeigniter.tw/user_guide/incoming/restful.html#id5).
+For acceptable method names, please refer to our [documentation](https://codeigniter.com/user_guide/incoming/restful.html#limit-the-routes-made).
 
 #### placeholder
 
