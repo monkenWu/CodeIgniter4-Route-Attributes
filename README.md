@@ -6,6 +6,32 @@ You can use this library to make CodeIgniter4 able to define routing settings of
 
 [中文手冊](README_zh-TW.md)
 
+<!-- TOC -->
+
+- [CodeIgniter4-Route-Attribute](#codeigniter4-route-attribute)
+    - [Quick demo](#quick-demo)
+    - [Installation Guide](#installation-guide)
+        - [Requirements](#requirements)
+        - [Composer Install](#composer-install)
+    - [Instructions](#instructions)
+        - [Route](#route)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+            - [Placeholder](#placeholder)
+            - [Single Method to declare multiple Routes](#single-method-to-declare-multiple-routes)
+        - [RouteRESTful](#routerestful)
+            - [Resource Route](#resource-route)
+            - [Presenter Route](#presenter-route)
+            - [websafe](#websafe)
+            - [only](#only)
+            - [except](#except)
+            - [placeholder](#placeholder)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+        - [RouteGroup](#routegroup)
+
+<!-- /TOC -->
+
 ## Quick demo 
 
 ```php

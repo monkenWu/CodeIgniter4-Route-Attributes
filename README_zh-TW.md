@@ -4,6 +4,32 @@
 
 你可以使用這個程式庫讓 CodeIgniter4 能夠以註解來定義控制器的路由設定。
 
+<!-- TOC -->
+
+- [CodeIgniter4-Route-Attribute](#codeigniter4-route-attribute)
+    - [快速演示](#%E5%BF%AB%E9%80%9F%E6%BC%94%E7%A4%BA)
+    - [安裝指引](#%E5%AE%89%E8%A3%9D%E6%8C%87%E5%BC%95)
+        - [需求](#%E9%9C%80%E6%B1%82)
+        - [Composer 安裝](#composer-%E5%AE%89%E8%A3%9D)
+    - [使用說明](#%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E)
+        - [Route](#route)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+            - [置換符號](#%E7%BD%AE%E6%8F%9B%E7%AC%A6%E8%99%9F)
+            - [單一 Method 宣告多個路由](#%E5%96%AE%E4%B8%80-method-%E5%AE%A3%E5%91%8A%E5%A4%9A%E5%80%8B%E8%B7%AF%E7%94%B1)
+        - [RouteRESTful](#routerestful)
+            - [資源路由](#%E8%B3%87%E6%BA%90%E8%B7%AF%E7%94%B1)
+            - [表現層路由](#%E8%A1%A8%E7%8F%BE%E5%B1%A4%E8%B7%AF%E7%94%B1)
+            - [websafe](#websafe)
+            - [only](#only)
+            - [except](#except)
+            - [placeholder](#placeholder)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+        - [RouteGroup](#routegroup)
+
+<!-- /TOC -->
+
 ## 快速演示
 
 ```php
