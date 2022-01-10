@@ -1,6 +1,10 @@
 # CodeIgniter4-Route-Attribute
 
+[![Latest Stable Version](http://poser.pugx.org/monken/ci4-route-attributes/v)](https://packagist.org/packages/monken/ci4-route-attributes) [![Total Downloads](http://poser.pugx.org/monken/ci4-route-attributes/downloads)](https://packagist.org/packages/monken/ci4-route-attributes) [![Latest Unstable Version](http://poser.pugx.org/monken/ci4-route-attributes/v/unstable)](https://packagist.org/packages/monken/ci4-route-attributes) [![License](http://poser.pugx.org/monken/ci4-route-attributes/license)](https://packagist.org/packages/monken/ci4-route-attributes) [![PHP Version Require](http://poser.pugx.org/monken/ci4-route-attributes/require/php)](https://packagist.org/packages/monken/ci4-route-attributes)
+
 You can use this library to make CodeIgniter4 able to define routing settings of controllers through comments.
+
+[中文手冊](README_zh-TW.md)
 
 ## Quick demo 
 

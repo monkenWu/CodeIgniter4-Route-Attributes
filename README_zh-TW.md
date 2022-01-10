@@ -1,6 +1,8 @@
 # CodeIgniter4-Route-Attribute
 
-你可以使用這個程式庫讓 CodeIgniter4 能夠使用註解來定義控制器的路由設定。
+[![Latest Stable Version](http://poser.pugx.org/monken/ci4-route-attributes/v)](https://packagist.org/packages/monken/ci4-route-attributes) [![Total Downloads](http://poser.pugx.org/monken/ci4-route-attributes/downloads)](https://packagist.org/packages/monken/ci4-route-attributes) [![Latest Unstable Version](http://poser.pugx.org/monken/ci4-route-attributes/v/unstable)](https://packagist.org/packages/monken/ci4-route-attributes) [![License](http://poser.pugx.org/monken/ci4-route-attributes/license)](https://packagist.org/packages/monken/ci4-route-attributes) [![PHP Version Require](http://poser.pugx.org/monken/ci4-route-attributes/require/php)](https://packagist.org/packages/monken/ci4-route-attributes)
+
+你可以使用這個程式庫讓 CodeIgniter4 能夠以註解來定義控制器的路由設定。
 
 ## 快速演示
 
