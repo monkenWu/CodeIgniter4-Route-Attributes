@@ -1,6 +1,34 @@
 # CodeIgniter4-Route-Attribute
 
-你可以使用這個程式庫讓 CodeIgniter4 能夠使用註解來定義控制器的路由設定。
+[![Latest Stable Version](http://poser.pugx.org/monken/ci4-route-attributes/v)](https://packagist.org/packages/monken/ci4-route-attributes) [![Total Downloads](http://poser.pugx.org/monken/ci4-route-attributes/downloads)](https://packagist.org/packages/monken/ci4-route-attributes) [![Latest Unstable Version](http://poser.pugx.org/monken/ci4-route-attributes/v/unstable)](https://packagist.org/packages/monken/ci4-route-attributes) [![License](http://poser.pugx.org/monken/ci4-route-attributes/license)](https://packagist.org/packages/monken/ci4-route-attributes) [![PHP Version Require](http://poser.pugx.org/monken/ci4-route-attributes/require/php)](https://packagist.org/packages/monken/ci4-route-attributes)
+
+你可以使用這個程式庫讓 CodeIgniter4 能夠以註解來定義控制器的路由設定。
+
+<!-- TOC -->
+
+- [CodeIgniter4-Route-Attribute](#codeigniter4-route-attribute)
+    - [快速演示](#%E5%BF%AB%E9%80%9F%E6%BC%94%E7%A4%BA)
+    - [安裝指引](#%E5%AE%89%E8%A3%9D%E6%8C%87%E5%BC%95)
+        - [需求](#%E9%9C%80%E6%B1%82)
+        - [Composer 安裝](#composer-%E5%AE%89%E8%A3%9D)
+    - [使用說明](#%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E)
+        - [Route](#route)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+            - [置換符號](#%E7%BD%AE%E6%8F%9B%E7%AC%A6%E8%99%9F)
+            - [單一 Method 宣告多個路由](#%E5%96%AE%E4%B8%80-method-%E5%AE%A3%E5%91%8A%E5%A4%9A%E5%80%8B%E8%B7%AF%E7%94%B1)
+        - [RouteRESTful](#routerestful)
+            - [資源路由](#%E8%B3%87%E6%BA%90%E8%B7%AF%E7%94%B1)
+            - [表現層路由](#%E8%A1%A8%E7%8F%BE%E5%B1%A4%E8%B7%AF%E7%94%B1)
+            - [websafe](#websafe)
+            - [only](#only)
+            - [except](#except)
+            - [placeholder](#placeholder)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
+        - [RouteGroup](#routegroup)
+
+<!-- /TOC -->
 
 ## 快速演示
 
@@ -124,10 +152,40 @@ class Ci4Controller extends BaseController
 
 #### ignoreGroup
 
-若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但某個路由你希望獨立開來，不沿用 `RouteGroup` 。這時你就可以將這個參數設定為 `false` ，它會讓路由以完全獨立的方式進行設定：
+若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但某個路由你希望獨立開來，不沿用 `RouteGroup` 。這時你就可以將這個參數設定為 `true` ，它會讓路由以完全獨立的方式進行設定：
 
 ```php=
 #[Route(path: 'attr/route', methods: ["get"], ignoreGroup: true)]
+```
+
+#### 置換符號
+
+你只需要關注 `path` 中的置換符號設定，程式庫會自動地判斷控制器方法的參數數量，並正確設定路由。
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+
+class Ci4Controller extends BaseController
+{
+    #[Route(path: 'test/(:segment)/(:segment)/(:segment)', methods: ["get"])]
+    public function hello($a, $b, $c)
+    {
+        echo $a . '<br>';
+        echo $b . '<br>';
+        echo $c . '<br>';
+    }
+
+}
+```
+
+這等同於：
+
+```php
+$route->get('test/(:segment)/(:segment)/(:segment)', 'App\Controllers\Ci4Controller::hello/$1/$2/$3');
 ```
 
 #### 單一 Method 宣告多個路由
@@ -269,10 +327,10 @@ $routes->presenter('user', [
 
 #### ignoreGroup
 
-若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但你希望獨立地設定 `RouteRESTful` ，不沿用 `RouteGroup` 的相關設定。這時你就可以將這個參數設定為 `false` ：
+若你有使用 `RouteGroup` 來統一設定同一控制器類別下的路由，但你希望獨立地設定 `RouteRESTful` ，不沿用 `RouteGroup` 的相關設定。這時你就可以將這個參數設定為 `true` ：
 
 ```php
-#[RouteRESTful(name: 'api/user', ignoreGroup: false)]
+#[RouteRESTful(name: 'api/user', ignoreGroup: true)]
 ```
 
 ### RouteGroup
