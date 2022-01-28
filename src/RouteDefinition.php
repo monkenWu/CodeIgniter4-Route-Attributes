@@ -8,16 +8,14 @@ use monken\Ci4RouteAttributes\Route;
 
 class RouteDefinition
 {
-    protected ?RouteGroup $routeGroup;
-
     /**
      * Route Instance Array
      *
      * @var array<Route>
      */
     protected array $routes = [];
-
-    protected ?RouteRESTful $routeRESTful;
+    protected ?RouteGroup $routeGroup = null;
+    protected ?RouteRESTful $routeRESTful = null;
 
     public function setRouteGroup(RouteGroup $routeGroup)
     {
@@ -54,7 +52,16 @@ class RouteDefinition
         return $this->routeRESTful;
     }
 
-    public function register()
+    public function registerRouteSettiong()
     {
+        foreach ($this->routes as $route) {
+            $route->register();
+        }
+        if(!is_null($this->routeRESTful)){
+            $this->routeRESTful->register();
+        }
+        if(!is_null($this->routeGroup)){
+            $this->routeGroup->registerRoutes();
+        }
     }
 }
