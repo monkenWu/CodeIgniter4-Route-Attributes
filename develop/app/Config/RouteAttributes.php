@@ -14,7 +14,7 @@ class RouteAttributes extends BaseConfig
      */
     public bool $enabled = true;
 
-    /**
+    /** 
      * autoscan namespaces
      *
      * @var array<string>
