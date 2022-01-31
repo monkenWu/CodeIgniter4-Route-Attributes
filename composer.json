@@ -4,6 +4,7 @@
     "keywords": [
 		"codeigniter4",
 		"php8 attribute",
+        "attribute",
 		"router"
 	],
     "type": "library",
