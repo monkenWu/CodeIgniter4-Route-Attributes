@@ -160,7 +160,7 @@ php spark route-attr:init
 你可以透過以下指令產生在 Production 環境下的路由屬性定義檔案，以減少效能的損耗：
 
 ```
-php spark route-attr:init
+php spark route-attr:make
 ```
 
 上述指令將會在 `routeDefinitionFilePath` 所定義的路徑中，產生名為 `RouteAttributesDefinition` 的檔案。
@@ -169,7 +169,7 @@ php spark route-attr:init
 
 有兩種方式可以更新 Production 環境下的路由屬性定義檔案。
 
-1. 重新執行 `php spark route-attr:init` 指令，新的內容將會直接覆蓋。
+1. 重新執行 `php spark route-attr:make` 指令，新的內容將會直接覆蓋。
 2. 刪除 `RouteAttributesDefinition` 檔案，程式庫若是找不到該檔案，將會自動掃描並產生一份路由屬性定義檔案。
 
 ### Route
