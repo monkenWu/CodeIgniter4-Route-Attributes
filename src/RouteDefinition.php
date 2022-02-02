@@ -2,6 +2,7 @@
 
 namespace monken\Ci4RouteAttributes;
 
+use monken\Ci4RouteAttributes\RouteEnvironment;
 use monken\Ci4RouteAttributes\RouteGroup;
 use monken\Ci4RouteAttributes\RouteRESTful;
 use monken\Ci4RouteAttributes\Route;
@@ -14,8 +15,14 @@ class RouteDefinition
      * @var array<Route>
      */
     protected array $routes = [];
+    protected ?RouteEnvironment $routeEnvironment = null;
     protected ?RouteGroup $routeGroup = null;
     protected ?RouteRESTful $routeRESTful = null;
+
+    public function setRouteEnvironment(RouteEnvironment $routeEnvironment)
+    {
+        $this->routeEnvironment = $routeEnvironment;
+    }
 
     public function setRouteGroup(RouteGroup $routeGroup)
     {
@@ -54,14 +61,25 @@ class RouteDefinition
 
     public function registerRouteSettiong()
     {
-        foreach ($this->routes as $route) {
-            $route->register();
-        }
-        if(!is_null($this->routeRESTful)){
-            $this->routeRESTful->register();
-        }
-        if(!is_null($this->routeGroup)){
-            $this->routeGroup->registerRoutes();
+        if (is_null($this->routeEnvironment)) {
+            foreach ($this->routes as $route) {
+                $route->register();
+            }
+            if (!is_null($this->routeRESTful)) {
+                $this->routeRESTful->register();
+            }
+            if (!is_null($this->routeGroup)) {
+                $this->routeGroup->registerRoutes();
+            }
+        } else {
+            $this->routeEnvironment->bindRoutes($this->routes);
+            if (!is_null($this->routeRESTful)) {
+                $this->routeEnvironment->bindRoute($this->routeRESTful);
+            }
+            if (!is_null($this->routeGroup)) {
+                $this->routeEnvironment->bindRouteGroup($this->routeGroup);
+            }
+            $this->routeEnvironment->registerRoutes();
         }
     }
 }

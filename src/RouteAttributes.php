@@ -4,6 +4,7 @@ namespace monken\Ci4RouteAttributes;
 
 use HaydenPierce\ClassFinder\ClassFinder;
 use monken\Ci4RouteAttributes\RouteDefinition;
+use monken\Ci4RouteAttributes\RouteEnvironment;
 
 class RouteAttributes
 {
@@ -103,6 +104,11 @@ class RouteAttributes
         \ReflectionClass $controller
     ) {
         $routeDefinition = new RouteDefinition();
+
+        $envAttributes = $controller->getAttributes(RouteEnvironment::class);
+        if (count($envAttributes) === 1) {
+            $routeDefinition->setRouteEnvironment($envAttributes[0]->newInstance());
+        }
 
         $groupAttributes = $controller->getAttributes(RouteGroup::class);
         if (count($groupAttributes) === 1) {
