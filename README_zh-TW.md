@@ -7,30 +7,31 @@
 <!-- TOC -->
 
 - [CodeIgniter4-Route-Attribute](#codeigniter4-route-attribute)
-    - [快速演示](#快速演示)
-    - [安裝指引](#安裝指引)
-        - [需求](#需求)
-        - [Composer 安裝](#composer-安裝)
-    - [使用說明](#使用說明)
-        - [正式環境與開發環境](#正式環境與開發環境)
-            - [組態設定檔](#組態設定檔)
-            - [產生路由屬性定義檔案](#產生路由屬性定義檔案)
-            - [更新路由屬性定義檔案](#更新路由屬性定義檔案)
+    - [快速演示](#%E5%BF%AB%E9%80%9F%E6%BC%94%E7%A4%BA)
+    - [安裝指引](#%E5%AE%89%E8%A3%9D%E6%8C%87%E5%BC%95)
+        - [需求](#%E9%9C%80%E6%B1%82)
+        - [Composer 安裝](#composer-%E5%AE%89%E8%A3%9D)
+    - [使用說明](#%E4%BD%BF%E7%94%A8%E8%AA%AA%E6%98%8E)
+        - [正式環境與開發環境](#%E6%AD%A3%E5%BC%8F%E7%92%B0%E5%A2%83%E8%88%87%E9%96%8B%E7%99%BC%E7%92%B0%E5%A2%83)
+            - [組態設定檔](#%E7%B5%84%E6%85%8B%E8%A8%AD%E5%AE%9A%E6%AA%94)
+            - [產生路由屬性定義檔案](#%E7%94%A2%E7%94%9F%E8%B7%AF%E7%94%B1%E5%B1%AC%E6%80%A7%E5%AE%9A%E7%BE%A9%E6%AA%94%E6%A1%88)
+            - [更新路由屬性定義檔案](#%E6%9B%B4%E6%96%B0%E8%B7%AF%E7%94%B1%E5%B1%AC%E6%80%A7%E5%AE%9A%E7%BE%A9%E6%AA%94%E6%A1%88)
         - [Route](#route)
             - [options](#options)
             - [ignoreGroup](#ignoregroup)
-            - [置換符號](#置換符號)
-            - [單一 Method 宣告多個路由](#單一-method-宣告多個路由)
+            - [置換符號](#%E7%BD%AE%E6%8F%9B%E7%AC%A6%E8%99%9F)
+            - [單一 Method 宣告多個路由](#%E5%96%AE%E4%B8%80-method-%E5%AE%A3%E5%91%8A%E5%A4%9A%E5%80%8B%E8%B7%AF%E7%94%B1)
         - [RouteRESTful](#routerestful)
-            - [資源路由](#資源路由)
-            - [表現層路由](#表現層路由)
+            - [資源路由](#%E8%B3%87%E6%BA%90%E8%B7%AF%E7%94%B1)
+            - [表現層路由](#%E8%A1%A8%E7%8F%BE%E5%B1%A4%E8%B7%AF%E7%94%B1)
             - [websafe](#websafe)
             - [only](#only)
             - [except](#except)
             - [placeholder](#placeholder)
-            - [options](#options-1)
-            - [ignoreGroup](#ignoregroup-1)
+            - [options](#options)
+            - [ignoreGroup](#ignoregroup)
         - [RouteGroup](#routegroup)
+        - [RouteEnvironment](#routeenvironment)
 
 <!-- /TOC -->
 
@@ -430,4 +431,85 @@ $routes->group(
         $routes->get('get/something', 'App\Controllers\Group ::somefunction');
     }
 );
+```
+
+### RouteEnvironment
+
+你可以創造僅有在特定環境中可以使用的路由，比如：在開發模式能夠使用的路由，但在正式環境與測試環境無法使用。上述的需求你可以透過在類別上宣告 `RouteEnvironment` 做到。
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+
+#[RouteEnvironment(type: "development")]
+class EnvRoute extends BaseController
+{
+
+    #[Route(path:'dev/tool', methods:['cli'])]
+    public function devToolMethod()
+    {
+        return "tool msg";
+    }
+
+    #[Route(path:'dev/page', methods:['get'])]
+    public function devPageMethod()
+    {
+        return "page msg";
+    }
+
+```
+
+上述設定將等同於：
+
+```php
+$routes->environment('development', function ($routes) {
+    $routes->cli('dev/tool', 'App\Controllers\EnvRoute::devToolMethod');
+    $routes->get('dev/page', 'App\Controllers\EnvRoute::devPageMethod');
+});
+```
+
+若你需要， `RouteEnvironment` 也能與 `RouteGroup` 一同工作：
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+use monken\Ci4RouteAttributes\RouteGroup;
+
+#[RouteEnvironment(type: "development")]
+#[RouteGroup('/dev')]
+class EnvRoute extends BaseController
+{
+
+    #[Route(path:'tool', methods:['cli'])]
+    public function devToolMethod()
+    {
+        return "tool msg";
+    }
+
+    #[Route(path:'page', methods:['get'])]
+    public function devPageMethod()
+    {
+        return "page msg";
+    }
+
+```
+
+上述設定將等同於：
+
+```php
+$routes->environment('development', function ($routes) {
+    $routes->group(
+        '/dev',
+        function ($routes) {
+            $routes->cli('tool', 'App\Controllers\EnvRoute::devToolMethod');
+            $routes->get('page', 'App\Controllers\EnvRoute::devPageMethod');
+        }
+    );
+});
 ```
