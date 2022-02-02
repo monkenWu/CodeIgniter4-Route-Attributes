@@ -28,10 +28,10 @@ class RouteGroup
         return $this;
     }
 
-    public function registerRoutes()
+    public function registerRoutes(?\CodeIgniter\Router\RouteCollection $ciRoutes = null)
     {
         $routes = $this->routes;
-        $ciRoutes = Services::routes();
+        if(is_null($ciRoutes)) $ciRoutes = Services::routes();
         $ciRoutes->group(
             $this->name,
             $this->options,

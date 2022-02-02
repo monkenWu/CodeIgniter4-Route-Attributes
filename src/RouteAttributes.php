@@ -4,6 +4,7 @@ namespace monken\Ci4RouteAttributes;
 
 use HaydenPierce\ClassFinder\ClassFinder;
 use monken\Ci4RouteAttributes\RouteDefinition;
+use monken\Ci4RouteAttributes\RouteEnvironment;
 
 class RouteAttributes
 {
