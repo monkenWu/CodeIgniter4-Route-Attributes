@@ -105,6 +105,11 @@ class RouteAttributes
     ) {
         $routeDefinition = new RouteDefinition();
 
+        $envAttributes = $controller->getAttributes(RouteEnvironment::class);
+        if (count($envAttributes) === 1) {
+            $routeDefinition->setRouteEnvironment($envAttributes[0]->newInstance());
+        }
+
         $groupAttributes = $controller->getAttributes(RouteGroup::class);
         if (count($groupAttributes) === 1) {
             $routeDefinition->setRouteGroup($groupAttributes[0]->newInstance());

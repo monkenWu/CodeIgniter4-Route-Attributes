@@ -31,7 +31,7 @@ class RouteEnvironment
     public function __construct(
         protected string $type = ''
     ) {
-        if(!in_array($type, $this->allowMethod)){
+        if(!in_array($type, $this->allowType)){
             throw RouteEnvironmentException::forAllowType($type);
         }
     }
@@ -47,6 +47,19 @@ class RouteEnvironment
         RouteInterface $route
     ): RouteEnvironment {
         $this->routes[] = $route;
+        return $this;
+    }
+
+    /**
+     * bind routes
+     *
+     * @param array<RouteInterface> $routes 
+     * @return RouteEnvironment
+     */
+    public function bindRoutes(
+        array $routes
+    ): RouteEnvironment {
+        $this->routes = $routes;
         return $this;
     }
 

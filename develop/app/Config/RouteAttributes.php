@@ -31,7 +31,7 @@ class RouteAttributes extends BaseConfig
     public string $routeDefinitionFilePath = WRITEPATH . 'cache';
 
     /**
-     * Whether to use pre-generated definition files in production.
+     * Whether to use pre-generated route definition files in production.
      * Note that when this option is set to `true`, controller files will not be automatically
      * scanned in production environment. You must use `route-attr:make` command to generate
      * route definition files to improve performance in production environment.

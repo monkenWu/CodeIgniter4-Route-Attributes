@@ -26,20 +26,12 @@ class RouteDefinition
 
     public function setRouteGroup(RouteGroup $routeGroup)
     {
-        if (is_null($this->routeEnvironment)) {
-            $this->routeGroup = $routeGroup;
-        } else {
-            $this->routeEnvironment->bindRouteGroup($routeGroup);
-        }
+        $this->routeGroup = $routeGroup;
     }
 
     public function addRoute(Route $route)
     {
-        if (is_null($this->routeEnvironment)) {
-            $this->routes[] = $route;
-        } else {
-            $this->routeEnvironment->bindRoute($route);
-        }
+        $this->routes[] = $route;
     }
 
     public function setRouteRESTful(RouteRESTful $routeRESTful)
@@ -69,14 +61,25 @@ class RouteDefinition
 
     public function registerRouteSettiong()
     {
-        foreach ($this->routes as $route) {
-            $route->register();
-        }
-        if (!is_null($this->routeRESTful)) {
-            $this->routeRESTful->register();
-        }
-        if (!is_null($this->routeGroup)) {
-            $this->routeGroup->registerRoutes();
+        if(is_null($this->routeEnvironment)){
+            foreach ($this->routes as $route) {
+                $route->register();
+            }
+            if (!is_null($this->routeRESTful)) {
+                $this->routeRESTful->register();
+            }
+            if (!is_null($this->routeGroup)) {
+                $this->routeGroup->registerRoutes();
+            }    
+        }else{
+            $this->routeEnvironment->bindRoutes($this->routes);
+            if (!is_null($this->routeRESTful)) {
+                $this->routeEnvironment->bindRoute($this->routeRESTful);
+            }
+            if (!is_null($this->routeGroup)) {
+                $this->routeEnvironment->bindRouteGroup($this->routeGroup);
+            }
+            $this->routeEnvironment->registerRoutes();
         }
     }
 }
