@@ -18,14 +18,14 @@ class MakeRouteDefinition extends BaseCommand
             CLI::color("Generate route definition file......\n", "blue")
         );
 
-        if(RouteAttributes::generateRouteDefinition(config("RouteAttributes"))){
+        if (RouteAttributes::generateRouteDefinition(config("RouteAttributes"))) {
             CLI::write(
                 CLI::color("Generated successfully!\n", 'green')
-            );    
-        }else{
+            );
+        } else {
             CLI::write(
                 CLI::color("Generated faild, please read the log file.\n", 'red')
-            );    
+            );
         }
     }
 }

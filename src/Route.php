@@ -23,7 +23,7 @@ class Route implements RouteInterface
         public bool $ignoreGroup = false
     ) {
         foreach ($methods as $method) {
-            if(!in_array($method, $this->allowMethod)){
+            if (!in_array($method, $this->allowMethod)) {
                 throw RouteException::forAllowMethod($path, $method);
             }
         }

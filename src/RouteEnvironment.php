@@ -31,7 +31,7 @@ class RouteEnvironment
     public function __construct(
         protected string $type = ''
     ) {
-        if(!in_array($type, $this->allowType)){
+        if (!in_array($type, $this->allowType)) {
             throw RouteEnvironmentException::forAllowType($type);
         }
     }
@@ -66,13 +66,13 @@ class RouteEnvironment
     public function registerRoutes()
     {
         $ciRoutes = Services::routes();
-        
+
         if (!is_null($this->routeGroup)) {
             $routeGroup = $this->routeGroup;
             $groupCallback = function (RouteCollection $envRoute) use ($routeGroup) {
                 $routeGroup->registerRoutes($envRoute);
-            };       
-            $ciRoutes->environment($this->type, $groupCallback);     
+            };
+            $ciRoutes->environment($this->type, $groupCallback);
         }
 
         $routes = $this->routes;

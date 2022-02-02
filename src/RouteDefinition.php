@@ -61,7 +61,7 @@ class RouteDefinition
 
     public function registerRouteSettiong()
     {
-        if(is_null($this->routeEnvironment)){
+        if (is_null($this->routeEnvironment)) {
             foreach ($this->routes as $route) {
                 $route->register();
             }
@@ -70,8 +70,8 @@ class RouteDefinition
             }
             if (!is_null($this->routeGroup)) {
                 $this->routeGroup->registerRoutes();
-            }    
-        }else{
+            }
+        } else {
             $this->routeEnvironment->bindRoutes($this->routes);
             if (!is_null($this->routeRESTful)) {
                 $this->routeEnvironment->bindRoute($this->routeRESTful);
