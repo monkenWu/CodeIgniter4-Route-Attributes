@@ -36,7 +36,7 @@ class Route implements RouteInterface
     ): Route {
         $this->className = $className;
         $this->methodName = $methodName;
-        $this->parametersString = $this->getParametersString($parametersCount);
+        $this->parametersString = $this->getParametersString($parametersCount ?? 0);
         return $this;
     }
 
