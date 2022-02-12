@@ -70,10 +70,15 @@ class RouteAttributes
         self::$routeDefinitionInstances = unserialize($routeDefinitionString);
     }
 
-    protected static function init(\Config\RouteAttributes $config)
+    public static function initInstances()
     {
         self::$reflectionClassInstances = [];
         self::$routeDefinitionInstances = [];
+    }
+
+    protected static function init(\Config\RouteAttributes $config)
+    {
+        self::initInstances();
         //reflection controller
         foreach ($config->controllerNamespaces as $namespace) {
             static::reflectionControllerClasses($namespace);
