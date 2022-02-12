@@ -8,8 +8,8 @@ use monken\Ci4RouteAttributes\Route;
 class RouteTest extends Controller
 {
 
-    #[Route(path: '/routeTest/(:any)/(:any)/(:any)', methods: ["get"])]
-    #[Route(path: '/api/v1/test/(:any)/(:any)/(:any)', methods: ["get"])]
+    #[Route(path: '/routeTest/(:segment)/(:segment)/(:segment)', methods: ["get"])]
+    #[Route(path: '/api/v1/test/(:segment)/(:segment)/(:segment)', methods: ["get"])]
     public function get($a, $b, $c)
     {
         echo $a . '<br>';
