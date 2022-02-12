@@ -23,7 +23,7 @@ class Route implements RouteInterface
         public bool $ignoreGroup = false
     ) {
         foreach ($methods as $method) {
-            if(!in_array($method, $this->allowMethod)){
+            if (!in_array($method, $this->allowMethod)) {
                 throw RouteException::forAllowMethod($path, $method);
             }
         }
@@ -34,9 +34,9 @@ class Route implements RouteInterface
         ?string $methodName = null,
         ?int $parametersCount = null
     ): Route {
-        $this->className = $className;
+        $this->className = strpos($className, '\\') === 0 ? $className : "\\{$className}";
         $this->methodName = $methodName;
-        $this->parametersString = $this->getParametersString($parametersCount);
+        $this->parametersString = $this->getParametersString($parametersCount ?? 0);
         return $this;
     }
 

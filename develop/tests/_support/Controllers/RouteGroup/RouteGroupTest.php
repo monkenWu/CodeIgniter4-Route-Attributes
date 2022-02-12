@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace Tests\Support\Controllers\RouteGroup;
 
+use CodeIgniter\Controller;
 use monken\Ci4RouteAttributes\Route;
 use monken\Ci4RouteAttributes\RouteGroup;
-use monken\Ci4RouteAttributes\RouteEnvironment;
 
-#[RouteEnvironment(type: "development")]
 #[RouteGroup('/route/testgroup')]
-class Group extends BaseController
+class RouteGroupTest extends Controller
 {
 
     #[Route(path:'getindex', methods:['get'])]
@@ -18,15 +17,14 @@ class Group extends BaseController
     }
 
     #[Route(path:'get/something', methods:['get', 'post'])]
-    public function somefunction()
+    public function someMethod()
     {
         return "something";
     }
 
     #[Route(path:'get/ignore', methods:['get'], ignoreGroup: true)]
-    public function test()
+    public function ignoreMethod()
     {
-        return "ignore";
+        return "PHP8Attributes";
     }
-
 }

@@ -4,6 +4,7 @@
     "keywords": [
 		"codeigniter4",
 		"php8 attribute",
+        "attribute",
 		"router"
 	],
     "type": "library",
@@ -17,7 +18,8 @@
     "minimum-stability": "stable",
     "require": {
         "php" : "^8",
-        "haydenpierce/class-finder": "^0.4.3"
+        "haydenpierce/class-finder": "^0.4.3",
+        "codeigniter4/framework": "^4"
     },
     "autoload": {
 		"psr-4": {

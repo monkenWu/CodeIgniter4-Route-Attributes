@@ -14,6 +14,10 @@ You can use this library to make CodeIgniter4 able to define routing settings of
         - [Requirements](#requirements)
         - [Composer Install](#composer-install)
     - [Instructions](#instructions)
+        - [Production and Development Environment](#production-and-development-environment)
+            - [Configuration File](#configuration-file)
+            - [Generate Route Attribute Definition File](#generate-route-attribute-definition-file)
+            - [Update Route Attribute Definition File](#update-route-attribute-definition-file)
         - [Route](#route)
             - [options](#options)
             - [ignoreGroup](#ignoregroup)
@@ -26,9 +30,10 @@ You can use this library to make CodeIgniter4 able to define routing settings of
             - [only](#only)
             - [except](#except)
             - [placeholder](#placeholder)
-            - [options](#options)
-            - [ignoreGroup](#ignoregroup)
+            - [options](#options-1)
+            - [ignoreGroup](#ignoregroup-1)
         - [RouteGroup](#routegroup)
+        - [RouteEnvironment](#routeenvironment)
 
 <!-- /TOC -->
 
@@ -84,6 +89,12 @@ The upper command will make to changes on our project.
 
 1. `app/Config` will have a `RouteAttributes.php` configuration file, you can adjust the library's execution setting through this file. And it looks like this:
     ```php
+    <?php
+
+    namespace Config;
+
+    use CodeIgniter\Config\BaseConfig;
+
     class RouteAttributes extends BaseConfig
     {
 
@@ -94,7 +105,7 @@ The upper command will make to changes on our project.
         */
         public bool $enabled = true;
 
-        /**
+        /** 
         * autoscan namespaces
         *
         * @var array<string>
@@ -103,6 +114,22 @@ The upper command will make to changes on our project.
             "App\Controllers"
         ];
 
+        /**
+        * Generate production environment route definition file path
+        *
+        * @var string
+        */
+        public string $routeDefinitionFilePath = WRITEPATH . 'cache';
+
+        /**
+        * Whether to use pre-generated route definition files in production.
+        * Note that when this option is set to `true`, controller files will not be automatically
+        * scanned in production environment. You must use `route-attr:make` command to generate
+        * route definition files to improve performance in production environment.
+        *
+        * @var boolean
+        */
+        public bool $productionUseDefinitionFile = true;
     }
     ```
 2. Automatically write the library needed events into the endpoint of file `app/Config/Events.php`, the event will be used when CodeIgniter4 initializes, automatically registering routes. The command will write the contents in as below:
@@ -117,6 +144,35 @@ The upper command will make to changes on our project.
 In short, this library is a [CodeIgniter4 Router](https://codeigniter.com/user_guide/incoming/routing.html) presentative way under the PHP8 Attributes feature, it merely provides litte mapping and encapsulation for some CodeIgniter4 Router methods. Other than that, there's no other extra functionalities.
 
 By means of scanning the comments automatically inside the Controller, routes and methods will be connected, enables you to write routing rules straightforwardly, and maintain the relationship between Controllers and Routes in a convenient way.
+
+### Production and Development Environment
+
+When you are using this library in Development environment under CodeIgnitere4 framework, it will re-analyze all Controllers classes everytime when a request should occur, and meanwhile handle with the correspond Route Attribures. This strategy can bring maximum convenience to developing, changes of Route Attributes will take effect immediately. However, in production environment, this strategy will cause considerale performance loss. Therefore our library provides a cache-like method to lower the performance loss aiming at production environment.
+
+#### Configuration File
+
+You can find the two adjustable variables, `routeDefinitionFilePath` and `productionUseDefinitionFile`, in `app/Config/RouteAttributes.php`.
+
+You can use `routeDefinitionFilePath` to define storage location of your configuration file for production environment, it will be placed at `project_root/writable/cache` as default.
+
+You can change `productionUseDefinitionFile` as `true` or `false` to define whether to activate Route Attributes definition file in production environment or not to achieve the best performance. If it's `false`, then on every request of production environment, they will be re-scanned and Route Attributes inside Controllers will be handled.
+
+#### Generate Route Attribute Definition File
+
+You can generate your Route Attribute Definition File using the command below, to lower the performance loss: 
+
+```
+php spark route-attr:make
+```
+
+Upper mentioned command will generate a `RouteAttributesDefinition` file under the path defined in `routeDefinitionFilePath`.
+
+#### Update Route Attribute Definition File
+
+There are two ways to update the Route Attributes Definition File for your Production environment
+
+1. Run `php spark route-attr:make` again, new contents will directly cover the old ones.
+2. Delete `RouteAttributesDefinition` file, if the library couldn't find the file, it will scan and generate a Route Attribute Definition File automatically.
 
 ### Route
 
@@ -382,4 +438,84 @@ $routes->group(
         $routes->get('get/something', 'App\Controllers\Group ::somefunction');
     }
 );
+```
+### RouteEnvironment
+
+You can create special routes for specified environment, for instance, routes for development will be unavailable in production and staging environment. This requirement can be done through declaring `RouteEnvironment` in your class.
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+
+#[RouteEnvironment(type: "development")]
+class EnvRoute extends BaseController
+{
+
+    #[Route(path:'dev/tool', methods:['cli'])]
+    public function devToolMethod()
+    {
+        return "tool msg";
+    }
+
+    #[Route(path:'dev/page', methods:['get'])]
+    public function devPageMethod()
+    {
+        return "page msg";
+    }
+
+```
+
+Upper setting equals to:
+
+```php
+$routes->environment('development', function ($routes) {
+    $routes->cli('dev/tool', 'App\Controllers\EnvRoute::devToolMethod');
+    $routes->get('dev/page', 'App\Controllers\EnvRoute::devPageMethod');
+});
+```
+
+If you need, `RouteEnvironment` can also work with `RouteGroup`:
+
+```php
+<?php
+
+namespace App\Controllers;
+
+use monken\Ci4RouteAttributes\Route;
+use monken\Ci4RouteAttributes\RouteGroup;
+
+#[RouteEnvironment(type: "development")]
+#[RouteGroup('/dev')]
+class EnvRoute extends BaseController
+{
+
+    #[Route(path:'tool', methods:['cli'])]
+    public function devToolMethod()
+    {
+        return "tool msg";
+    }
+
+    #[Route(path:'page', methods:['get'])]
+    public function devPageMethod()
+    {
+        return "page msg";
+    }
+
+```
+
+Upper setting equals to:
+
+```php
+$routes->environment('development', function ($routes) {
+    $routes->group(
+        '/dev',
+        function ($routes) {
+            $routes->cli('tool', 'App\Controllers\EnvRoute::devToolMethod');
+            $routes->get('page', 'App\Controllers\EnvRoute::devPageMethod');
+        }
+    );
+});
 ```
