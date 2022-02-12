@@ -43,7 +43,7 @@ class RouteAttributes
 
         //register route
         foreach (self::$routeDefinitionInstances as $routeDefinition) {
-            $routeDefinition->registerRouteSettiong();
+            $routeDefinition->registerRouteSetting();
         }
     }
 

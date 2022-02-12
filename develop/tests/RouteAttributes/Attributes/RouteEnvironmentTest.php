@@ -45,42 +45,47 @@ class RouteEnvironmentTest extends RouteAttributsTest
 
     public function testRouteEnvGroupRegister()
     {
-        $name = 'api/v1';
-        $options = ['filter' => 'api-auth'];
-        $routeGroup = new RouteGroup(
-            name: $name,
-            options: $options
-        );
-        $routeGroup->bindRoute($this->route1)->registerRoutes();
+        $routeEnv = new RouteEnvironment('testing');
+        $routeEnv->bindRouteGroup($this->routeGroup)->registerRoutes();
 
         $getRoutes = Services::routes()->getRoutes('get');
-        $this->assertArrayHasKey("{$name}/user", $getRoutes);
-        $this->assertEquals("{$this->className}::index", $getRoutes["{$name}/user"] ?? null);
+        $this->assertArrayHasKey("{$this->groupName}/user", $getRoutes);
+        $this->assertEquals("{$this->className}::index", $getRoutes["{$this->groupName}/user"] ?? null);
+
+        $postRoutes = Services::routes()->getRoutes('post');
+        $this->assertArrayHasKey("{$this->groupName}/user", $postRoutes);
+        $this->assertEquals("{$this->className}::create", $postRoutes["{$this->groupName}/user"] ?? null);
+        $this->assertArrayHasKey("{$this->groupName}/user/([0-9]+)", $postRoutes);
+        $this->assertEquals("{$this->className}::update/$1", $postRoutes["{$this->groupName}/user/([0-9]+)"] ?? null);
     }
 
-    // public function testMultipleRouteRegister()
-    // {
-    //     $name = 'api/v1';
-    //     $options = ['filter' => 'api-auth'];
-    //     $routeGroup = new RouteGroup(
-    //         name: $name,
-    //         options: $options
-    //     );
-    //     $routeGroup->bindRoute($this->route1)
-    //         ->bindRoute($this->route2)
-    //         ->bindRoute($this->route3)
-    //         ->registerRoutes();
+    public function testRouteEnvRoutesRegister()
+    {
+        $routeEnv = new RouteEnvironment('testing');
+        $routeEnv->bindRoute($this->route1)->bindRoute($this->route2)->registerRoutes();
 
-    //     $getRoutes = Services::routes()->getRoutes('get');
-    //     $this->assertArrayHasKey("{$name}/user", $getRoutes);
-    //     $this->assertEquals("{$this->className}::index", $getRoutes["{$name}/user"] ?? null);
+        $getRoutes = Services::routes()->getRoutes('get');
+        $this->assertArrayHasKey("user", $getRoutes);
+        $this->assertEquals("{$this->className}::index", $getRoutes["user"] ?? null);
 
-    //     $postRoutes = Services::routes()->getRoutes('post');
-    //     $this->assertArrayHasKey("{$name}/user", $postRoutes);
-    //     $this->assertEquals("{$this->className}::create", $postRoutes["{$name}/user"] ?? null);
-    //     $this->assertArrayHasKey("{$name}/user/([0-9]+)", $postRoutes);
-    //     $this->assertEquals("{$this->className}::update/$1", $postRoutes["{$name}/user/([0-9]+)"] ?? null);
-    // }
+        $postRoutes = Services::routes()->getRoutes('post');
+        $this->assertArrayHasKey("user", $postRoutes);
+        $this->assertEquals("{$this->className}::create", $postRoutes["user"] ?? null);
+    }
+
+    public function testRouteEnvRoutesArrayRegister()
+    {
+        $routeEnv = new RouteEnvironment('testing');
+        $routeEnv->bindRoutes([$this->route1, $this->route2])->registerRoutes();
+
+        $getRoutes = Services::routes()->getRoutes('get');
+        $this->assertArrayHasKey("user", $getRoutes);
+        $this->assertEquals("{$this->className}::index", $getRoutes["user"] ?? null);
+
+        $postRoutes = Services::routes()->getRoutes('post');
+        $this->assertArrayHasKey("user", $postRoutes);
+        $this->assertEquals("{$this->className}::create", $postRoutes["user"] ?? null);
+    }
 
     public function testException()
     {
