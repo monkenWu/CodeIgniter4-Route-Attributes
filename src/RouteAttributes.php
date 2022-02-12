@@ -23,12 +23,11 @@ class RouteAttributes
      */
     protected static array $routeDefinitionInstances = [];
 
-    public static function runHandler()
+    public static function runHandler(?\Config\RouteAttributes $config = null)
     {
-        /**
-         * @var \Config\RouteAttributes
-         */
-        $config = config("RouteAttributes");
+        if(is_null($config)){
+            $config = config("RouteAttributes");
+        }
 
         if ($config->enabled === false) return;
 
