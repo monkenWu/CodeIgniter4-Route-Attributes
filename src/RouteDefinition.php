@@ -19,24 +19,28 @@ class RouteDefinition
     protected ?RouteGroup $routeGroup = null;
     protected ?RouteRESTful $routeRESTful = null;
 
-    public function setRouteEnvironment(RouteEnvironment $routeEnvironment)
+    public function setRouteEnvironment(RouteEnvironment $routeEnvironment): RouteDefinition
     {
         $this->routeEnvironment = $routeEnvironment;
+        return $this;
     }
 
-    public function setRouteGroup(RouteGroup $routeGroup)
+    public function setRouteGroup(RouteGroup $routeGroup): RouteDefinition
     {
         $this->routeGroup = $routeGroup;
+        return $this;
     }
 
-    public function addRoute(Route $route)
+    public function addRoute(Route $route): RouteDefinition
     {
         $this->routes[] = $route;
+        return $this;
     }
 
-    public function setRouteRESTful(RouteRESTful $routeRESTful)
+    public function setRouteRESTful(RouteRESTful $routeRESTful): RouteDefinition
     {
         $this->routeRESTful = $routeRESTful;
+        return $this;
     }
 
     public function getRouteGroup(): ?RouteGroup
@@ -59,7 +63,7 @@ class RouteDefinition
         return $this->routeRESTful;
     }
 
-    public function registerRouteSettiong()
+    public function registerRouteSetting()
     {
         if (is_null($this->routeEnvironment)) {
             foreach ($this->routes as $route) {

@@ -23,12 +23,11 @@ class RouteAttributes
      */
     protected static array $routeDefinitionInstances = [];
 
-    public static function runHandler()
+    public static function runHandler(?\Config\RouteAttributes $config = null)
     {
-        /**
-         * @var \Config\RouteAttributes
-         */
-        $config = config("RouteAttributes");
+        if(is_null($config)){
+            $config = config("RouteAttributes");
+        }
 
         if ($config->enabled === false) return;
 
@@ -43,7 +42,7 @@ class RouteAttributes
 
         //register route
         foreach (self::$routeDefinitionInstances as $routeDefinition) {
-            $routeDefinition->registerRouteSettiong();
+            $routeDefinition->registerRouteSetting();
         }
     }
 
@@ -71,10 +70,15 @@ class RouteAttributes
         self::$routeDefinitionInstances = unserialize($routeDefinitionString);
     }
 
-    protected static function init(\Config\RouteAttributes $config)
+    public static function initInstances()
     {
         self::$reflectionClassInstances = [];
         self::$routeDefinitionInstances = [];
+    }
+
+    protected static function init(\Config\RouteAttributes $config)
+    {
+        self::initInstances();
         //reflection controller
         foreach ($config->controllerNamespaces as $namespace) {
             static::reflectionControllerClasses($namespace);

@@ -44,7 +44,7 @@ class RouteRESTful implements RouteInterface
     public function bind(
         string $className,
     ): RouteInterface {
-        $this->className = $className;
+        $this->className = strpos($className, '\\') === 0 ? $className : "\\{$className}";
         return $this;
     }
 
